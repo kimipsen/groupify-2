@@ -1,0 +1,28 @@
+{
+    "name": "Alpine",
+    "image": "mcr.microsoft.com/devcontainers/dotnet:dev-10.0-preview",
+    "features": {
+        "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
+        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers-extra/features/typescript:2": {}
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "npm install -g @angular/cli",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csharp",
+                "ms-vscode-remote.remote-containers",
+                "ms-vscode-remote.remote-explorer",
+                "ms-vscode-remote.remote-ssh",
+                "ms-vscode-remote.remote-ssh-edit",
+                "ms-dotnettools.csdevkit",
+                "EditorConfig.EditorConfig",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "ms-dotnettools.vscodeintellicode-csharp",
+                "SonarSource.sonarlint-vscode"
+            ]
+        }
+    }
+}

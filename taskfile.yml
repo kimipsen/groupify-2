@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  build-frontend:
+    dir: src/frontend/app
+    cmds:
+      - npm run build
+
+  build-backend:
+    dir: src/backend/app
+    cmds:
+      - dotnet build
+
+  publish:
+    deps:
+      - build-frontend
+    dir: src/backend/app
+    cmds:
+      - dotnet publish -c Release -o ../../../.dist --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
