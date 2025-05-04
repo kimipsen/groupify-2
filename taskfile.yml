@@ -17,3 +17,9 @@ tasks:
     dir: src/backend/app
     cmds:
       - dotnet publish -c Release -o ../../../.dist --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+
+  add-migration:
+    dir: src/backend/app
+    cmds:
+      - DATABASE__TYPE=PostgreSQL dotnet ef migrations add PSQL-{{.CLI_ARGS}} --context AppDbContext --output-dir Database/Migrations/PostgreSQL
+      - DATABASE__TYPE=SQLite dotnet ef migrations add SQLite-{{.CLI_ARGS}} --context AppDbContext --output-dir Database/Migrations/SQLite

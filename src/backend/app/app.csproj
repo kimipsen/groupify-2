@@ -12,9 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0-preview1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0-preview.3.25172.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="10.0.0-preview.3.25172.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0-preview.3.25171.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0-preview.3.25171.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0-preview.3.25171.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.0-preview.3.25171.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-preview.3.25171.5" />
@@ -24,7 +29,13 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0-preview.3.25171.5" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="4.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="4.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Vogen" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database/Extensions/" />
+    <Folder Include="Features/" />
   </ItemGroup>
 
 </Project>
