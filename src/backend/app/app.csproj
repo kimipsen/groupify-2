@@ -33,9 +33,4 @@
     <PackageReference Include="Vogen" Version="7.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database/Extensions/" />
-    <Folder Include="Features/" />
-  </ItemGroup>
-
 </Project>

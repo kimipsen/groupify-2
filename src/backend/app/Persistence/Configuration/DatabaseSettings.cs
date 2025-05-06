@@ -1,4 +1,4 @@
-namespace app.Database.Options;
+namespace app.Persistence.Configuration;
 
 public enum DatabaseType
 {

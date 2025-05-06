@@ -1,11 +1,8 @@
-using app.Database;
-using app.Database.Options;
-using app.Models;
-using app.Models.Types;
+using app.Persistence.DbContext;
 using app.Setup;
+using app.Setup.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// Add DbContext to the container
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    // Configuration will be handled in AppDbContext
-});
-
+builder.Services.AddHandlers();
+builder.Services.AddDatabase();
 builder.Services.ConfigureOptions(builder.Configuration);
 
 var app = builder.Build();
@@ -49,26 +42,17 @@ app.MapFallbackToFile("index.html", new StaticFileOptions
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/api/weatherforecast", (AppDbContext context) =>
+app.MapGet("/api/weatherforecast", (IDbContextFactory contextFactory) =>
 {
+    var context = contextFactory.CreateDbContext();
     context.Database.Migrate();
-    Person p1 = new()
-    {
-        Name = Name.From("Kim Ipsen")
-    };
-    Organization o1 = new()
-    {
-        Name = Name.From("Ipsens Terror Skole"),
-    };
-    p1.Organizations.Add(o1);
-    context.Add(p1);
-    context.Add(o1);
-    context.SaveChanges();
     var forecast =  Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (

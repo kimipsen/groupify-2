@@ -1,6 +1,4 @@
-using app.Database.Options;
-
-namespace app.Database.Validators;
+namespace app.Persistence.Configuration;
 
 public class ConnectionStringsValidator : AbstractValidator<ConnectionStrings>
 {

@@ -1,7 +1,6 @@
 using System;
-using app.Database.Options;
 
-namespace app.Database.Validators;
+namespace app.Persistence.Configuration;
 
 public class DatabaseSettingsValidator : AbstractValidator<DatabaseSettings>
 {

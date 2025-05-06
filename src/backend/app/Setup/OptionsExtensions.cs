@@ -1,20 +1,8 @@
-using app.Database.Options;
-using app.Database.Validators;
-
 namespace app.Setup;
 
 public static class Extensions
 {
-    public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
-    {
-        // Configure your options here
-        services.AddWithValidation<ConnectionStrings, ConnectionStringsValidator>(ConnectionStrings.SectionName);
-        services.AddWithValidation<DatabaseSettings, DatabaseSettingsValidator>(DatabaseSettings.SectionName);
-
-        return services;
-    }
-
-    private static OptionsBuilder<TOptions> AddWithValidation<TOptions, TValidator>(
+    public static OptionsBuilder<TOptions> AddWithValidation<TOptions, TValidator>(
         this IServiceCollection services,
         string configurationSection)
     where TOptions : class
