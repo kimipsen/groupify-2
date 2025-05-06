@@ -1,4 +1,5 @@
 using System.Reflection;
+using app.Features.People;
 using app.Setup.Dispatcher;
 using app.Setup.Handlers;
 
@@ -28,6 +29,12 @@ public static class ServiceCollectionExtensions
             services.AddScoped(handler.Interface, handler.Implementation);
         }
 
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IPersonRepository, PersonRepository>();
         return services;
     }
 }

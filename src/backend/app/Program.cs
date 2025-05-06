@@ -12,7 +12,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddHandlers();
 builder.Services.AddDatabase();
-builder.Services.ConfigureOptions(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
