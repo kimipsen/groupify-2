@@ -3,7 +3,10 @@ using Vogen;
 namespace app.Domain.Types;
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public readonly partial struct PersonId {}
+public readonly partial struct PersonId
+{
+    public static readonly PersonId Empty = new(Guid.Empty);
+}
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
 public readonly partial struct OrganizationId {}

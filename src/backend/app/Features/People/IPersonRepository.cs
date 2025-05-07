@@ -6,4 +6,7 @@ namespace app.Features.People;
 public interface IPersonRepository
 {
     Task<Person?> GetById(PersonId id, CancellationToken cancellationToken);
+    Task<Person> CreatePerson(Name name, CancellationToken cancellationToken);
+    Task DeletePerson(PersonId id, CancellationToken cancellationToken);
+    Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, string? searchTerm, CancellationToken cancellationToken);
 }
