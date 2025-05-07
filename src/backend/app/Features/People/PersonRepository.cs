@@ -20,26 +20,25 @@ public class PersonRepository(IDbContextFactory contextFactory) : IPersonReposit
         return person;
     }
 
-    public Task DeletePerson(PersonId id, CancellationToken cancellationToken)
+    public async Task DeletePerson(PersonId id, CancellationToken cancellationToken)
     {
         using var context = contextFactory.CreateDbContext();
         var person = context.People.Find(id);
         if (person != null)
         {
             context.People.Remove(person);
-            return context.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
-        return Task.CompletedTask;
     }
 
-    public Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, string? searchTerm, CancellationToken cancellationToken)
+    public async Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, string? searchTerm, CancellationToken cancellationToken)
     {
         using var context = contextFactory.CreateDbContext();
         var lastIdOrEmpty = lastPersonId ?? PersonId.Empty;
-        return context.People
+        return await context.People
             .OrderBy(x => x.Id)
-            .Where(x => string.IsNullOrEmpty(searchTerm) || x.Name.Value.Contains(searchTerm))
-            .Where(x => x.Id.Value> lastIdOrEmpty.Value)
+            .Where(x => string.IsNullOrEmpty(searchTerm) || ((string)x.Name).Contains(searchTerm))
+            .Where(x => x.Id> lastIdOrEmpty)
             .Take(pageSize)
             .ToListAsync(cancellationToken);
     }
@@ -48,5 +47,16 @@ public class PersonRepository(IDbContextFactory contextFactory) : IPersonReposit
     {
         using var context = contextFactory.CreateDbContext();
         return await context.People.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+
+    public async Task UpdatePerson(PersonId id, Name name, CancellationToken cancellationToken)
+    {
+        using var context = contextFactory.CreateDbContext();
+        var person = await context.People.FindAsync(id, cancellationToken);
+        if (person != null)
+        {
+            person.Name = name;
+            await context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

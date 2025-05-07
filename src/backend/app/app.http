@@ -1,11 +1,62 @@
 @app_HostAddress = http://localhost:5290
 
-GET {{app_HostAddress}}/weatherforecast/
-Accept: application/json
+###
+# REST calls for PeopleController
+
+# @name peopleSearchRequest
+# GET: api/people
+GET {{app_HostAddress}}/api/people
+Content-Type: application/json
+
+{
+  "LastPersonId": null,
+  "PageSize": 4,
+  "SearchTerm": null
+}
 
 ###
 
-GET {{app_HostAddress}}/api/people/c7ac9a19-b84b-4553-868b-00e99e688069
-Accept: application/json
+# GET: api/people
+GET {{app_HostAddress}}/api/people
+Content-Type: application/json
+
+{
+  "LastPersonId": "0196ac5c-b950-7e59-8b03-ebb02be21512",
+  "PageSize": 4,
+  "SearchTerm": null
+}
+
+###
+
+# Extract the first person ID from the response
+@id = {{peopleSearchRequest.response.body.$[0].id}}
+
+###
+# GET: api/people/{id}
+GET {{app_HostAddress}}/api/people/{{id}}
+Content-Type: application/json
+
+###
+# @prompt name Name of the person being created
+# POST: api/people
+POST {{app_HostAddress}}/api/people
+Content-Type: application/json
+
+{
+  "Name": "{{name}}"
+}
+
+###
+# @prompt name Modified name of the first person in the search list
+# PUT: api/people/{id}
+PUT {{app_HostAddress}}/api/people/{{id}}
+Content-Type: application/json
+
+"{{name}}"
+
+###
+# DELETE: api/people/{id}
+DELETE {{app_HostAddress}}/api/people/{{id}}
+Content-Type: application/json
 
 ###

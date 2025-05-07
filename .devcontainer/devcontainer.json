@@ -21,7 +21,8 @@
                 "GitHub.copilot",
                 "GitHub.copilot-chat",
                 "ms-dotnettools.vscodeintellicode-csharp",
-                "SonarSource.sonarlint-vscode"
+                "SonarSource.sonarlint-vscode",
+                "humao.rest-client"
             ]
         }
     }

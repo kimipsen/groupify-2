@@ -36,14 +36,21 @@ namespace app.Features.People
             if (command.Name == Name.Unspecified)
                 return BadRequest(new { Message = "Name is required" });
 
-            await dispatcher.Send(command, cancellationToken);
-            return NoContent();
+            var id = await dispatcher.Send<CreatePersonCommand, PersonId>(command, cancellationToken);
+            return Ok(new { Message = $"Created person with ID {id}", Id = id });
         }
 
         // PUT: api/people/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdatePerson(PersonId id, [FromBody] Name name)
+        public async Task<IActionResult> UpdatePerson(PersonId id, [FromBody] Name name, CancellationToken cancellationToken)
         {
+            if (name == Name.Unspecified)
+                return BadRequest(new { Message = "Name is required" });
+
+            if (id == PersonId.Empty)
+                return BadRequest(new { Message = "ID is required" });
+
+            await dispatcher.Send(new UpdatePersonCommand { Id = id, Name = name }, cancellationToken);
             return Ok(new { Message = $"Updated person with ID {id} to name {name}" });
         }
 

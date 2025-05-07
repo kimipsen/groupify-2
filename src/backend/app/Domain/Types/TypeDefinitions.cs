@@ -6,12 +6,17 @@ namespace app.Domain.Types;
 public readonly partial struct PersonId
 {
     public static readonly PersonId Empty = new(Guid.Empty);
+
+    public static bool operator >(PersonId left, PersonId right) => left.CompareTo(right) > 0;
+    public static bool operator <(PersonId left, PersonId right) => left.CompareTo(right) < 0;
+    public static bool operator >=(PersonId left, PersonId right) => left.CompareTo(right) >= 0;
+    public static bool operator <=(PersonId left, PersonId right) => left.CompareTo(right) <= 0;
 }
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
 public readonly partial struct OrganizationId {}
 
-[ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
+[ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson, stringComparers: StringComparersGeneration.Generate)]
 public readonly partial struct Name {
     public static readonly Name Unspecified = new("Unspecified name");
     private static Validation Validate(string value)
