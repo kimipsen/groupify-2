@@ -10,8 +10,6 @@ public class PersonRepository(IDbContextFactory contextFactory) : IPersonReposit
     public async Task<Person?> GetById(PersonId id, CancellationToken cancellationToken)
     {
         using var context = contextFactory.CreateDbContext();
-        return await context.People
-            .AsNoTracking()
-            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await context.People.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 }

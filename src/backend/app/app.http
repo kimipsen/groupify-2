@@ -4,3 +4,8 @@ GET {{app_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{app_HostAddress}}/api/people/c7ac9a19-b84b-4553-868b-00e99e688069
+Accept: application/json
+
+###

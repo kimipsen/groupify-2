@@ -45,14 +45,16 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         // Configure your entities here
         modelBuilder.Entity<Organization>(b => {
-            b.Property(o => o.Id).HasConversion(new OrganizationId.EfCoreValueConverter());
+            b.HasKey(o => o.Id);
+            b.Property(o => o.Id).HasVogenConversion();
 
-            b.Property(o => o.Name).HasConversion(new Name.EfCoreValueConverter());
+            b.Property(o => o.Name).HasVogenConversion();
         });
         modelBuilder.Entity<Person>(b => {
-            b.Property(p => p.Id).HasConversion(new PersonId.EfCoreValueConverter());
+            b.HasKey(p => p.Id);
+            b.Property(p => p.Id).HasVogenConversion();
 
-            b.Property(p => p.Name).HasConversion(new Name.EfCoreValueConverter());
+            b.Property(p => p.Name).HasVogenConversion();
         });
 
         // Add any additional configurations here

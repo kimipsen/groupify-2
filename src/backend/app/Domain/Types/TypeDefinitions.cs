@@ -3,13 +3,13 @@ using Vogen;
 namespace app.Domain.Types;
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public partial struct PersonId {}
+public readonly partial struct PersonId {}
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public partial struct OrganizationId {}
+public readonly partial struct OrganizationId {}
 
 [ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public partial struct Name {
+public readonly partial struct Name {
     public static readonly Name Unspecified = new("Unspecified name");
     private static Validation Validate(string value)
     {
@@ -19,7 +19,7 @@ public partial struct Name {
         if (value.Length > 100)
             return Validation.Invalid("Name cannot be longer than 100 characters.");
 
-        if (value == Name.Unspecified)
+        if (value == Unspecified)
             return Validation.Invalid("Name cannot be 'Unspecified name'.");
 
         return Validation.Ok;
