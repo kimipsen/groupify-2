@@ -24,20 +24,20 @@ public class PersonRepository(IDbContextFactory contextFactory) : IPersonReposit
     {
         using var context = contextFactory.CreateDbContext();
         var person = context.People.Find(id);
-        if (person != null)
+        if (person is not null)
         {
             context.People.Remove(person);
             await context.SaveChangesAsync(cancellationToken);
         }
     }
 
-    public async Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, string? searchTerm, CancellationToken cancellationToken)
+    public async Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, SearchTerm searchTerm, CancellationToken cancellationToken)
     {
         using var context = contextFactory.CreateDbContext();
         var lastIdOrEmpty = lastPersonId ?? PersonId.Empty;
         return await context.People
             .OrderBy(x => x.Id)
-            .Where(x => string.IsNullOrEmpty(searchTerm) || ((string)x.Name).Contains(searchTerm))
+            .Where(x => string.IsNullOrEmpty(searchTerm.Value) || ((string)x.Name).Contains(searchTerm.Value))
             .Where(x => x.Id> lastIdOrEmpty)
             .Take(pageSize)
             .ToListAsync(cancellationToken);

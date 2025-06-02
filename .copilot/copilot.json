@@ -1,0 +1,10 @@
+{
+  // Copilot configuration for this repository
+  "ignore": [
+    "**/bin/**",
+    "**/obj/**",
+    "**/node_modules/**",
+    "**/wwwroot/**"
+  ],
+  "instructions": "See .copilot/instructions.md for project-specific Copilot guidance. Follow the code style and structure as described."
+}

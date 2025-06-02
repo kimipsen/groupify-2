@@ -2,6 +2,9 @@ using Vogen;
 
 namespace app.Domain.Types;
 
+[ValueObject<string>(Conversions.SystemTextJson)]
+public readonly partial struct SearchTerm { }
+
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
 public readonly partial struct PersonId
 {
@@ -14,7 +17,14 @@ public readonly partial struct PersonId
 }
 
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public readonly partial struct OrganizationId {}
+public readonly partial struct OrganizationId {
+    public static readonly OrganizationId Empty = new(Guid.Empty);
+
+    public static bool operator >(OrganizationId left, OrganizationId right) => left.CompareTo(right) > 0;
+    public static bool operator <(OrganizationId left, OrganizationId right) => left.CompareTo(right) < 0;
+    public static bool operator >=(OrganizationId left, OrganizationId right) => left.CompareTo(right) >= 0;
+    public static bool operator <=(OrganizationId left, OrganizationId right) => left.CompareTo(right) <= 0;
+}
 
 [ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson, stringComparers: StringComparersGeneration.Generate)]
 public readonly partial struct Name {
