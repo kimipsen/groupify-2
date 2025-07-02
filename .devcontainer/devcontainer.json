@@ -1,13 +1,16 @@
 {
-    "name": "Alpine",
-    "image": "mcr.microsoft.com/devcontainers/dotnet:dev-10.0-preview",
+    "name": "Groupify 2",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "${localWorkspaceFolderBasename}",
     "features": {
         "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
-        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "22"
+        },
         "ghcr.io/devcontainers-extra/features/typescript:2": {}
     },
     "remoteUser": "root",
-    "postCreateCommand": "npm install -g @angular/cli",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -22,7 +25,8 @@
                 "GitHub.copilot-chat",
                 "ms-dotnettools.vscodeintellicode-csharp",
                 "SonarSource.sonarlint-vscode",
-                "humao.rest-client"
+                "humao.rest-client",
+                "GitHub.vscode-pull-request-github"
             ]
         }
     }
