@@ -2,7 +2,7 @@
     "name": "Groupify 2",
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
-    "workspaceFolder": "${localWorkspaceFolderBasename}",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "features": {
         "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
         "ghcr.io/devcontainers/features/node:1": {
