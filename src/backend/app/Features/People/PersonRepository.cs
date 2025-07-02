@@ -31,14 +31,13 @@ public class PersonRepository(IDbContextFactory contextFactory) : IPersonReposit
         }
     }
 
-    public async Task<List<Person>> GetAll(PersonId? lastPersonId, int pageSize, SearchTerm searchTerm, CancellationToken cancellationToken)
+    public async Task<List<Person>> GetAll(PersonId lastPersonId, int pageSize, SearchTerm searchTerm, CancellationToken cancellationToken)
     {
         using var context = contextFactory.CreateDbContext();
-        var lastIdOrEmpty = lastPersonId ?? PersonId.Empty;
         return await context.People
             .OrderBy(x => x.Id)
-            .Where(x => string.IsNullOrEmpty(searchTerm.Value) || ((string)x.Name).Contains(searchTerm.Value))
-            .Where(x => x.Id> lastIdOrEmpty)
+            .Where(x => searchTerm.Equals(SearchTerm.Empty) || ((string)x.Name).Contains(searchTerm.Value))
+            .Where(x => x.Id > lastPersonId)
             .Take(pageSize)
             .ToListAsync(cancellationToken);
     }

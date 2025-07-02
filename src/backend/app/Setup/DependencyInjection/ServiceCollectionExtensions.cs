@@ -1,4 +1,5 @@
 using System.Reflection;
+using app.Features.Organizations;
 using app.Features.People;
 using app.Setup.Dispatcher;
 using app.Setup.Handlers;
@@ -36,6 +37,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         return services;
     }
 }

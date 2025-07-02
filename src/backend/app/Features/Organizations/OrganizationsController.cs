@@ -11,7 +11,7 @@ public class OrganizationsController(IDispatcher dispatcher) : ControllerBase
 {
     // GET: api/organizations
     [HttpGet]
-    public async Task<IActionResult> GetOrganizations([FromBody] GetOrganizationsQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetOrganizations([FromQuery] GetOrganizationsQuery query, CancellationToken cancellationToken)
     {
         var organizations = await dispatcher.Query<GetOrganizationsQuery, IEnumerable<Organization>>(query, cancellationToken);
         return Ok(organizations);
@@ -33,7 +33,7 @@ public class OrganizationsController(IDispatcher dispatcher) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateOrganization([FromBody]CreateOrganizationCommand command, CancellationToken cancellationToken)
     {
-        if (command.Name == Name.Unspecified)
+        if (command.Name.Equals(Name.Unspecified))
             return BadRequest(new { Message = "Name is required" });
 
         var id = await dispatcher.Send<CreateOrganizationCommand, OrganizationId>(command, cancellationToken);
@@ -44,10 +44,10 @@ public class OrganizationsController(IDispatcher dispatcher) : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateOrganization(OrganizationId id, [FromBody] Name name, CancellationToken cancellationToken)
     {
-        if (name == Name.Unspecified)
+        if (name.Equals(Name.Unspecified))
             return BadRequest(new { Message = "Name is required" });
 
-        if (id == OrganizationId.Empty)
+        if (id.Equals(OrganizationId.Empty))
             return BadRequest(new { Message = "ID is required" });
 
         await dispatcher.Send(new UpdateOrganizationCommand { Id = id, Name = name }, cancellationToken);
@@ -58,7 +58,7 @@ public class OrganizationsController(IDispatcher dispatcher) : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOrganization(OrganizationId id, CancellationToken cancellationToken)
     {
-        if (id == OrganizationId.Empty)
+        if (id.Equals(OrganizationId.Empty))
             return BadRequest(new { Message = "ID is required" });
 
         await dispatcher.Send(new DeleteOrganizationCommand { Id = id }, cancellationToken);

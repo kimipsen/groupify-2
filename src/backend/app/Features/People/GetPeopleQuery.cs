@@ -4,7 +4,7 @@ using app.Setup.Handlers;
 
 namespace app.Features.People;
 
-public class GetPeopleQuery : PaginatedQuery<PersonId> {}
+public class GetPeopleQuery : PaginatedQuery<PersonId> { }
 
 public class GetPeopleQueryHandler(IPersonRepository repository) : IQueryHandler<GetPeopleQuery, IEnumerable<Person>>
 {

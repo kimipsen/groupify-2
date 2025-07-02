@@ -2,33 +2,34 @@ using Vogen;
 
 namespace app.Domain.Types;
 
+[Instance("Empty", "")]
 [ValueObject<string>(Conversions.SystemTextJson)]
-public readonly partial struct SearchTerm { }
+public readonly partial struct SearchTerm {}
 
+[Instance("Empty", "")]
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public readonly partial struct PersonId
+public readonly partial struct PersonId 
 {
-    public static readonly PersonId Empty = new(Guid.Empty);
-
     public static bool operator >(PersonId left, PersonId right) => left.CompareTo(right) > 0;
     public static bool operator <(PersonId left, PersonId right) => left.CompareTo(right) < 0;
     public static bool operator >=(PersonId left, PersonId right) => left.CompareTo(right) >= 0;
     public static bool operator <=(PersonId left, PersonId right) => left.CompareTo(right) <= 0;
 }
 
+[Instance("Empty", "")]
 [ValueObject<Guid>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson)]
-public readonly partial struct OrganizationId {
-    public static readonly OrganizationId Empty = new(Guid.Empty);
-
+public readonly partial struct OrganizationId
+{
     public static bool operator >(OrganizationId left, OrganizationId right) => left.CompareTo(right) > 0;
     public static bool operator <(OrganizationId left, OrganizationId right) => left.CompareTo(right) < 0;
     public static bool operator >=(OrganizationId left, OrganizationId right) => left.CompareTo(right) >= 0;
     public static bool operator <=(OrganizationId left, OrganizationId right) => left.CompareTo(right) <= 0;
 }
 
+[Instance("Unspecified", "Unspecified name")]
 [ValueObject<string>(Conversions.EfCoreValueConverter | Conversions.SystemTextJson, stringComparers: StringComparersGeneration.Generate)]
-public readonly partial struct Name {
-    public static readonly Name Unspecified = new("Unspecified name");
+public readonly partial struct Name
+{
     private static Validation Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))

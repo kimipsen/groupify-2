@@ -11,7 +11,7 @@ namespace app.Features.People
     {
         // GET: api/people
         [HttpGet]
-        public async Task<IActionResult> GetPeople([FromBody] GetPeopleQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetPeople([FromQuery] GetPeopleQuery query, CancellationToken cancellationToken)
         {
             var people = await dispatcher.Query<GetPeopleQuery, IEnumerable<Person>>(query, cancellationToken);
             return Ok(people);
@@ -33,7 +33,7 @@ namespace app.Features.People
         [HttpPost]
         public async Task<IActionResult> CreatePerson([FromBody]CreatePersonCommand command, CancellationToken cancellationToken)
         {
-            if (command.Name == Name.Unspecified)
+            if (command.Name.Equals(Name.Unspecified))
                 return BadRequest(new { Message = "Name is required" });
 
             var id = await dispatcher.Send<CreatePersonCommand, PersonId>(command, cancellationToken);
@@ -44,10 +44,10 @@ namespace app.Features.People
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePerson(PersonId id, [FromBody] Name name, CancellationToken cancellationToken)
         {
-            if (name == Name.Unspecified)
+            if (name.Equals(Name.Unspecified))
                 return BadRequest(new { Message = "Name is required" });
 
-            if (id == PersonId.Empty)
+            if (id.Equals(PersonId.Empty))
                 return BadRequest(new { Message = "ID is required" });
 
             await dispatcher.Send(new UpdatePersonCommand { Id = id, Name = name }, cancellationToken);
